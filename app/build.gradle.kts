@@ -113,8 +113,8 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
 
     //Week7: Mapbox
-    //implementation(libs.mapbox.android)
-    //implementation(libs.mapbox.extension.compose)
+    implementation(libs.mapbox.android)
+    implementation(libs.mapbox.extension.compose)
 
     //Testing
     testImplementation(libs.junit)

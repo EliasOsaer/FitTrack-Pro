@@ -21,7 +21,7 @@ sealed class Screen(
     data object Workouts : Screen("workouts", R.string.workouts_label, Icons.Filled.FitnessCenter)
     data object Shop : Screen("shop", R.string.shop_label, Icons.Filled.ShoppingCart)
     data object Cart : Screen("cart", R.string.shop_label, Icons.Filled.ShoppingCart)
-    data object MapZones : Screen("map_zones", R.string.map_label, Icons.Filled.Map)
+    data object Map : Screen("map", R.string.map_label, Icons.Filled.Map)
     data object Sensors : Screen("sensors", R.string.sensors_label, Icons.Filled.Sensors)
 
     data object ScheduleWorkout : Screen("schedule_workout", R.string.schedule_workout, Icons.Filled.FitnessCenter)
@@ -34,6 +34,6 @@ val bottomBarScreens = listOf(
     Screen.Home,
     Screen.Workouts,
     Screen.Shop,
-    Screen.MapZones,
+    Screen.Map,
     Screen.Sensors
 )

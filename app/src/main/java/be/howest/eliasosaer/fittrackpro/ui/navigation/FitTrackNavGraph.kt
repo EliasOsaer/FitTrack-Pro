@@ -28,6 +28,8 @@ import be.howest.eliasosaer.fittrackpro.ui.workouts.WorkoutsScreen
 import be.howest.eliasosaer.fittrackpro.ui.workouts.WorkoutsViewModel
 import be.howest.eliasosaer.fittrackpro.ui.quickworkout.QuickWorkoutScreen
 import be.howest.eliasosaer.fittrackpro.ui.quickworkout.QuickWorkoutViewModel
+import be.howest.eliasosaer.fittrackpro.ui.map.MapScreen
+import be.howest.eliasosaer.fittrackpro.ui.map.MapViewModel
 
 @Composable
 fun FitTrackNavGraph(
@@ -40,6 +42,7 @@ fun FitTrackNavGraph(
     quickWorkoutViewModel: QuickWorkoutViewModel = hiltViewModel(),
     gearShopViewModel: GearShopViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel(),
+    mapViewModel: MapViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
@@ -50,6 +53,7 @@ fun FitTrackNavGraph(
     val quickWorkoutUiState by quickWorkoutViewModel.uiState.collectAsStateWithLifecycle()
     val gearShopUiState by gearShopViewModel.uiState.collectAsStateWithLifecycle()
     val cartUiState by cartViewModel.uiState.collectAsStateWithLifecycle()
+    val mapUiState by mapViewModel.uiState.collectAsStateWithLifecycle()
 
     NavHost(
         navController = navController,
@@ -230,6 +234,23 @@ fun FitTrackNavGraph(
                     } else {
                         cartViewModel.onRemove(item.id)
                     }
+                }
+            )
+        }
+
+        composable(Screen.Map.route) {
+            MapScreen(
+                uiState = mapUiState,
+                onRequestLocationPermissionResult = { granted ->
+                    if (!granted) {
+                        // optional: show snackbar later
+                    }
+                },
+                onMapReady = { mapView ->
+                    mapViewModel.attachMapView(mapView)
+                },
+                onMapDisposed = {
+                    mapViewModel.detachMapView()
                 }
             )
         }

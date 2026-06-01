@@ -32,7 +32,7 @@ workmanager = "2.9.0"
 workRuntimeKtx = "2.10.0"
 
 #Maps
-#mapbox = "11.11.0"
+mapbox = "11.11.0"
 
 #Testing
 junit = "4.13.2"
@@ -95,9 +95,9 @@ rabbitmq-amqp-client = { group = "com.rabbitmq", name = "amqp-client", version.r
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 
 # Mapbox
-#mapbox-android = { group = "com.mapbox.maps", name = "android", version.ref = "mapbox" }
-#mapbox-extension-compose = { group = "com.mapbox.extension", name = "maps-compose", version.ref = "mapbox" }
-#mapbox-navigation-android = { group = "com.mapbox.navigation", name = "android", version.ref = "mapbox" }
+mapbox-android = { group = "com.mapbox.maps", name = "android", version.ref = "mapbox" }
+mapbox-extension-compose = { group = "com.mapbox.extension", name = "maps-compose", version.ref = "mapbox" }
+mapbox-navigation-android = { group = "com.mapbox.navigation", name = "android", version.ref = "mapbox" }
 
 
 #Testing
