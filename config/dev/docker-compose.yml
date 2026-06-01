@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  lavinmq:
+    image: cloudamqp/lavinmq
+    container_name: lavinmq
+    ports:
+      - "40300:5672"
+      - "40301:15672"
+    networks:
+      - mobile-network
+
+networks:
+  mobile-network:
+    driver: bridge

@@ -46,34 +46,7 @@ private val CartStepperColor = Color(0xFF1F1F1F)
 private val CheckoutBlue = Color(0xFF5B86D9)
 private val ScreenBg = Color(0xFFF3F3F3)
 private val DividerColor = Color(0xFF343434)
-private val DeliveryFee = 4.90
-
-@Composable
-fun CartRoute(
-    onBackClick: () -> Unit,
-    onCheckoutClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: CartViewModel = hiltViewModel()
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    CartScreen(
-        uiState = uiState,
-        onBackClick = onBackClick,
-        onCheckoutClick = onCheckoutClick,
-        onIncreaseQuantity = { item ->
-            viewModel.onUpdateQuantity(item.id, item.qty + 1)
-        },
-        onDecreaseQuantity = { item ->
-            if (item.qty > 1) {
-                viewModel.onUpdateQuantity(item.id, item.qty - 1)
-            } else {
-                viewModel.onRemove(item.id)
-            }
-        },
-        modifier = modifier
-    )
-}
+private const val DeliveryFee = 4.90
 
 @Composable
 fun CartScreen(

@@ -225,6 +225,7 @@ fun FitTrackNavGraph(
                     navController.popBackStack()
                 },
                 onCheckoutClick = {
+                    cartViewModel.onCheckout()
                     navController.navigate(Screen.SharePurchase.route)
                 },
                 onIncreaseQuantity = { item ->

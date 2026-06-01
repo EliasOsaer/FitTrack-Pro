@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import be.howest.eliasosaer.fittrackpro.domain.model.CartItem
 import be.howest.eliasosaer.fittrackpro.domain.usecase.AddToCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.ObserveCartUseCase
+import be.howest.eliasosaer.fittrackpro.domain.usecase.PlaceOrderUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.RemoveFromCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.UpdateCartQuantityUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ class CartViewModel @Inject constructor(
     private val observeCart: ObserveCartUseCase,
     private val addToCart: AddToCartUseCase,
     private val removeFromCart: RemoveFromCartUseCase,
-    private val updateCartQuantity: UpdateCartQuantityUseCase
+    private val updateCartQuantity: UpdateCartQuantityUseCase,
+    private val placeOrder: PlaceOrderUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CartUiState())
@@ -61,6 +63,16 @@ class CartViewModel @Inject constructor(
             } else {
                 updateCartQuantity(itemId, qty)
             }
+        }
+    }
+
+    fun onCheckout() {
+        viewModelScope.launch {
+            val currentState = _uiState.value
+            placeOrder(
+                items = currentState.cartItems,
+                totalPrice = currentState.totalPrice
+            )
         }
     }
 }
