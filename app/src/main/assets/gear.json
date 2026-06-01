@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Resistance Bands Set",
+    "price": 19.99,
+    "imageUrl": "https://picsum.photos/seed/resistance-bands/600/400"
+  },
+  {
+    "id": 2,
+    "name": "Yoga Mat",
+    "price": 29.99,
+    "imageUrl": "https://picsum.photos/seed/yoga-mat/600/400"
+  },
+  {
+    "id": 3,
+    "name": "Adjustable Dumbbells",
+    "price": 79.99,
+    "imageUrl": "https://picsum.photos/seed/dumbbells/600/400"
+  },
+  {
+    "id": 4,
+    "name": "Jump Rope",
+    "price": 14.99,
+    "imageUrl": "https://picsum.photos/seed/jump-rope/600/400"
+  }
+]
