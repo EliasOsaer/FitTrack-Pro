@@ -30,6 +30,8 @@ import be.howest.eliasosaer.fittrackpro.ui.quickworkout.QuickWorkoutScreen
 import be.howest.eliasosaer.fittrackpro.ui.quickworkout.QuickWorkoutViewModel
 import be.howest.eliasosaer.fittrackpro.ui.map.MapScreen
 import be.howest.eliasosaer.fittrackpro.ui.map.MapViewModel
+import be.howest.eliasosaer.fittrackpro.ui.sharepurchase.SharePurchaseScreen
+import be.howest.eliasosaer.fittrackpro.ui.thankyou.ThankYouScreen
 
 @Composable
 fun FitTrackNavGraph(
@@ -223,7 +225,7 @@ fun FitTrackNavGraph(
                     navController.popBackStack()
                 },
                 onCheckoutClick = {
-                    // TODO checkout later
+                    navController.navigate(Screen.SharePurchase.route)
                 },
                 onIncreaseQuantity = { item ->
                     cartViewModel.onUpdateQuantity(item.id, item.qty + 1)
@@ -251,6 +253,32 @@ fun FitTrackNavGraph(
                 },
                 onMapDisposed = {
                     mapViewModel.detachMapView()
+                }
+            )
+        }
+
+        composable(Screen.SharePurchase.route) {
+            SharePurchaseScreen(
+                onShared = {
+                    navController.navigate(Screen.ThankYou.route) {
+                        popUpTo(Screen.SharePurchase.route) { inclusive = true }
+                    }
+                },
+                onNoThanksClick = {
+                    navController.navigate(Screen.ThankYou.route) {
+                        popUpTo(Screen.SharePurchase.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(Screen.ThankYou.route) {
+            ThankYouScreen(
+                onFinished = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(navController.graph.startDestinationId) { inclusive = false }
+                        launchSingleTop = true
+                    }
                 }
             )
         }

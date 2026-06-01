@@ -8,6 +8,8 @@
     <string name="workout_detail">Workout Detail</string>
     <string name="notifications_label">Notifications</string>
     <string name="workout_add_label">Workout Add</string>
+    <string name="share_purchase_label">Share Purchase</string>
+    <string name="thank_you_label">Thank You</string>
     <string name="edit_workout_label">Edit Workout</string>
     <string name="goal_settings_label">Goal settings</string>
     <string name="back_button">Back</string>
