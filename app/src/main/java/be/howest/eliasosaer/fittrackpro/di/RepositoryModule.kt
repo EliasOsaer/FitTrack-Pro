@@ -2,8 +2,10 @@ package be.howest.eliasosaer.fittrackpro.di
 
 import be.howest.eliasosaer.fittrackpro.data.repository.GearRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.WorkoutRepositoryImpl
+import be.howest.eliasosaer.fittrackpro.data.repository.CartRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.domain.repository.GearRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.WorkoutRepository
+import be.howest.eliasosaer.fittrackpro.domain.repository.CartRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +24,9 @@ abstract class RepositoryModule {
     abstract fun bindGearRepository(
         impl: GearRepositoryImpl
     ): GearRepository
+
+    @Binds
+    abstract fun bindCartRepository(
+        impl: CartRepositoryImpl
+    ): CartRepository
 }

@@ -16,6 +16,8 @@ import be.howest.eliasosaer.fittrackpro.ui.editworkout.EditWorkoutScreen
 import be.howest.eliasosaer.fittrackpro.ui.editworkout.EditWorkoutViewModel
 import be.howest.eliasosaer.fittrackpro.ui.gearshop.GearShopScreen
 import be.howest.eliasosaer.fittrackpro.ui.shop.GearShopViewModel
+import be.howest.eliasosaer.fittrackpro.ui.cart.CartScreen
+import be.howest.eliasosaer.fittrackpro.ui.cart.CartViewModel
 import be.howest.eliasosaer.fittrackpro.ui.home.HomeScreen
 import be.howest.eliasosaer.fittrackpro.ui.home.HomeViewModel
 import be.howest.eliasosaer.fittrackpro.ui.scheduleworkout.ScheduleWorkoutScreen
@@ -37,6 +39,7 @@ fun FitTrackNavGraph(
     editWorkoutViewModel: EditWorkoutViewModel = hiltViewModel(),
     quickWorkoutViewModel: QuickWorkoutViewModel = hiltViewModel(),
     gearShopViewModel: GearShopViewModel = hiltViewModel(),
+    cartViewModel: CartViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
@@ -46,6 +49,7 @@ fun FitTrackNavGraph(
     val editWorkoutUiState by editWorkoutViewModel.uiState.collectAsStateWithLifecycle()
     val quickWorkoutUiState by quickWorkoutViewModel.uiState.collectAsStateWithLifecycle()
     val gearShopUiState by gearShopViewModel.uiState.collectAsStateWithLifecycle()
+    val cartUiState by cartViewModel.uiState.collectAsStateWithLifecycle()
 
     NavHost(
         navController = navController,
@@ -203,7 +207,29 @@ fun FitTrackNavGraph(
                     gearShopViewModel.onAddToCart(item)
                 },
                 onCartClick = {
-                    // navController.navigate(Screen.Cart.route)
+                    navController.navigate(Screen.Cart.route)
+                }
+            )
+        }
+
+        composable(Screen.Cart.route) {
+            CartScreen(
+                uiState = cartUiState,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onCheckoutClick = {
+                    // TODO checkout later
+                },
+                onIncreaseQuantity = { item ->
+                    cartViewModel.onUpdateQuantity(item.id, item.qty + 1)
+                },
+                onDecreaseQuantity = { item ->
+                    if (item.qty > 1) {
+                        cartViewModel.onUpdateQuantity(item.id, item.qty - 1)
+                    } else {
+                        cartViewModel.onRemove(item.id)
+                    }
                 }
             )
         }

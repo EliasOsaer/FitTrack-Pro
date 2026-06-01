@@ -2,8 +2,10 @@ package be.howest.eliasosaer.fittrackpro.ui.shop
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import be.howest.eliasosaer.fittrackpro.domain.model.CartItem
 import be.howest.eliasosaer.fittrackpro.domain.model.GearItem
 import be.howest.eliasosaer.fittrackpro.domain.model.PriceSortOrder
+import be.howest.eliasosaer.fittrackpro.domain.usecase.AddToCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.GetGearItemsUseCase
 import be.howest.eliasosaer.fittrackpro.ui.gearshop.GearShopUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GearShopViewModel @Inject constructor(
-    private val getGearItems: GetGearItemsUseCase
+    private val getGearItems: GetGearItemsUseCase,
+    private val addToCart: AddToCartUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GearShopUiState())
@@ -71,6 +74,19 @@ class GearShopViewModel @Inject constructor(
     }
 
     fun onAddToCart(item: GearItem) {
+        viewModelScope.launch {
+            addToCart(
+                CartItem(
+                    id = item.id,
+                    productId = item.id,
+                    name = item.name,
+                    price = item.price,
+                    imageUrl = item.imageUrl,
+                    qty = 1
+                )
+            )
+        }
+
         _uiState.update { currentState ->
             currentState.copy(
                 cartItemCount = currentState.cartItemCount + 1

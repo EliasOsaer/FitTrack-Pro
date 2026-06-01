@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import be.howest.eliasosaer.fittrackpro.data.local.room.AppDatabase
 import be.howest.eliasosaer.fittrackpro.data.local.room.dao.WorkoutDao
+import be.howest.eliasosaer.fittrackpro.data.local.room.dao.CartDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,4 +30,8 @@ object DatabaseModule {
     @Provides
     fun provideWorkoutDao(db: AppDatabase): WorkoutDao =
         db.workoutDao()
+
+    @Provides
+    fun provideCartDao(db: AppDatabase): CartDao =
+        db.cartDao()
 }
