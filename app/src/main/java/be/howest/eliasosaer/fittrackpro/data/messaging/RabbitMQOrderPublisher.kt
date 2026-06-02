@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
-class RabbitMQPublisher @Inject constructor(
+class RabbitMQOrderPublisher @Inject constructor(
     private val hostName: String,
     private val queueName: String
 ): OrderPublisher {

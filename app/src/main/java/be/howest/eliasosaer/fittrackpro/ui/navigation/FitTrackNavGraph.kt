@@ -30,6 +30,9 @@ import be.howest.eliasosaer.fittrackpro.ui.quickworkout.QuickWorkoutScreen
 import be.howest.eliasosaer.fittrackpro.ui.quickworkout.QuickWorkoutViewModel
 import be.howest.eliasosaer.fittrackpro.ui.map.MapScreen
 import be.howest.eliasosaer.fittrackpro.ui.map.MapViewModel
+import be.howest.eliasosaer.fittrackpro.ui.permissions.AppPermission
+import be.howest.eliasosaer.fittrackpro.ui.permissions.MainViewModel
+import be.howest.eliasosaer.fittrackpro.ui.permissions.PermissionManager
 import be.howest.eliasosaer.fittrackpro.ui.sharepurchase.SharePurchaseScreen
 import be.howest.eliasosaer.fittrackpro.ui.thankyou.ThankYouScreen
 
@@ -45,6 +48,7 @@ fun FitTrackNavGraph(
     gearShopViewModel: GearShopViewModel = hiltViewModel(),
     cartViewModel: CartViewModel = hiltViewModel(),
     mapViewModel: MapViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
@@ -56,13 +60,25 @@ fun FitTrackNavGraph(
     val gearShopUiState by gearShopViewModel.uiState.collectAsStateWithLifecycle()
     val cartUiState by cartViewModel.uiState.collectAsStateWithLifecycle()
     val mapUiState by mapViewModel.uiState.collectAsStateWithLifecycle()
+    val permissionRequest by mainViewModel.permissionRequest.collectAsStateWithLifecycle()
+
+    PermissionManager(
+        permissionRequest = permissionRequest,
+        onPermissionResult = { permission, granted ->
+            mainViewModel.onPermissionResult(permission, granted)
+        }
+    )
 
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route,
         modifier = modifier
     ) {
+
         composable(Screen.Home.route) {
+            LaunchedEffect(Unit) {
+                mainViewModel.requestPermission(AppPermission.NOTIFICATIONS)
+            }
             HomeScreen(
                 uiState = homeUiState,
                 onNotificationsClick = {
