@@ -35,6 +35,8 @@ import be.howest.eliasosaer.fittrackpro.ui.permissions.MainViewModel
 import be.howest.eliasosaer.fittrackpro.ui.permissions.PermissionManager
 import be.howest.eliasosaer.fittrackpro.ui.sharepurchase.SharePurchaseScreen
 import be.howest.eliasosaer.fittrackpro.ui.thankyou.ThankYouScreen
+import be.howest.eliasosaer.fittrackpro.ui.sensors.SensorsScreen
+import be.howest.eliasosaer.fittrackpro.ui.sensors.SensorsViewModel
 
 @Composable
 fun FitTrackNavGraph(
@@ -49,6 +51,7 @@ fun FitTrackNavGraph(
     cartViewModel: CartViewModel = hiltViewModel(),
     mapViewModel: MapViewModel = hiltViewModel(),
     mainViewModel: MainViewModel = hiltViewModel(),
+    sensorsViewModel: SensorsViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val homeUiState by homeViewModel.uiState.collectAsStateWithLifecycle()
@@ -61,6 +64,7 @@ fun FitTrackNavGraph(
     val cartUiState by cartViewModel.uiState.collectAsStateWithLifecycle()
     val mapUiState by mapViewModel.uiState.collectAsStateWithLifecycle()
     val permissionRequest by mainViewModel.permissionRequest.collectAsStateWithLifecycle()
+    val sensorsUiState by sensorsViewModel.uiState.collectAsStateWithLifecycle()
 
     PermissionManager(
         permissionRequest = permissionRequest,
@@ -296,6 +300,18 @@ fun FitTrackNavGraph(
                         popUpTo(navController.graph.startDestinationId) { inclusive = false }
                         launchSingleTop = true
                     }
+                }
+            )
+        }
+
+        composable(Screen.Sensors.route) {
+            SensorsScreen(
+                uiState = sensorsUiState,
+                onScreenVisible = {
+                    sensorsViewModel.onScreenVisible()
+                },
+                onScreenHidden = {
+                    sensorsViewModel.onScreenHidden()
                 }
             )
         }
