@@ -7,10 +7,12 @@ import be.howest.eliasosaer.fittrackpro.domain.model.GearItem
 import be.howest.eliasosaer.fittrackpro.domain.model.PriceSortOrder
 import be.howest.eliasosaer.fittrackpro.domain.usecase.AddToCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.GetGearItemsUseCase
+import be.howest.eliasosaer.fittrackpro.domain.usecase.ObserveCartUseCase
 import be.howest.eliasosaer.fittrackpro.ui.gearshop.GearShopUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GearShopViewModel @Inject constructor(
     private val getGearItems: GetGearItemsUseCase,
+    private val observeCart: ObserveCartUseCase,
     private val addToCart: AddToCartUseCase
 ) : ViewModel() {
 
@@ -28,16 +31,36 @@ class GearShopViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val gear = getGearItems()
-            allGearItems = gear
-            _uiState.update {
-                it.copy(
-                    gearItems = getVisibleGearItems(
-                        items = allGearItems,
-                        query = it.searchQuery,
-                        sortOrder = it.sortOrder
+            observeCart().collectLatest { items ->
+                _uiState.update { state ->
+                    state.copy(
+                        cartItemCount = items.sumOf { it.qty }
                     )
-                )
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            try {
+                val gear = getGearItems()
+                allGearItems = gear
+                _uiState.update { state ->
+                    state.copy(
+                        gearItems = getVisibleGearItems(
+                            items = allGearItems,
+                            query = state.searchQuery,
+                            sortOrder = state.sortOrder
+                        ),
+                        errorMessage = null
+                    )
+                }
+            } catch (_: Exception) {
+                _uiState.update {
+                    it.copy(
+                        gearItems = emptyList(),
+                        errorMessage = "Unable to load shop items right now."
+                    )
+                }
             }
         }
     }
@@ -84,12 +107,6 @@ class GearShopViewModel @Inject constructor(
                     imageUrl = item.imageUrl,
                     qty = 1
                 )
-            )
-        }
-
-        _uiState.update { currentState ->
-            currentState.copy(
-                cartItemCount = currentState.cartItemCount + 1
             )
         }
     }

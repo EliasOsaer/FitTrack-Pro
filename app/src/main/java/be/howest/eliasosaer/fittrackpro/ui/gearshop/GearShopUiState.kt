@@ -7,5 +7,6 @@ data class GearShopUiState(
     val searchQuery: String = "",
     val sortOrder: PriceSortOrder = PriceSortOrder.ASCENDING,
     val gearItems: List<GearItem> = emptyList(),
-    val cartItemCount: Int = 0
+    val cartItemCount: Int = 0,
+    val errorMessage: String? = null
 )

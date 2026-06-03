@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import be.howest.eliasosaer.fittrackpro.domain.model.CartItem
 import be.howest.eliasosaer.fittrackpro.domain.usecase.AddToCartUseCase
+import be.howest.eliasosaer.fittrackpro.domain.usecase.ClearCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.ObserveCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.PlaceOrderUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.RemoveFromCartUseCase
@@ -23,7 +24,8 @@ class CartViewModel @Inject constructor(
     private val addToCart: AddToCartUseCase,
     private val removeFromCart: RemoveFromCartUseCase,
     private val updateCartQuantity: UpdateCartQuantityUseCase,
-    private val placeOrder: PlaceOrderUseCase
+    private val placeOrder: PlaceOrderUseCase,
+    private val clearCart: ClearCartUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CartUiState())
@@ -73,6 +75,7 @@ class CartViewModel @Inject constructor(
                 items = currentState.cartItems,
                 totalPrice = currentState.totalPrice
             )
+            clearCart()
         }
     }
 }

@@ -119,19 +119,35 @@ fun GearShopScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(bottom = 88.dp)
-            ) {
-                items(
-                    items = uiState.gearItems,
-                    key = { it.id }
-                ) { gearItem ->
-                    GearCard(
-                        gearItem = gearItem,
-                        onAddClick = { onAddToCart(gearItem) }
+            val errorMessage = uiState.errorMessage
+
+            if (errorMessage != null) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = errorMessage,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Medium
                     )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(bottom = 88.dp)
+                ) {
+                    items(
+                        items = uiState.gearItems,
+                        key = { it.id }
+                    ) { gearItem ->
+                        GearCard(
+                            gearItem = gearItem,
+                            onAddClick = { onAddToCart(gearItem) }
+                        )
+                    }
                 }
             }
         }

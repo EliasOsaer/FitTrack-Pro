@@ -35,6 +35,10 @@ class CartRepositoryImpl @Inject constructor(
         cartDao.update(entity.copy(qty = qty))
     }
 
+    override suspend fun clear() {
+        cartDao.clear()
+    }
+
     override fun observeCart(): Flow<List<CartItem>> {
         return cartDao.getCartItems().map { entities ->
             entities.map { e ->
