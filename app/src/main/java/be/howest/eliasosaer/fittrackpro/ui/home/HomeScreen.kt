@@ -89,7 +89,6 @@ fun HomeScreen(
     }
 }
 
-//Summary Stats
 @Composable
 private fun SummarySection(
     summaryStats: List<SummaryStat>,
@@ -149,7 +148,6 @@ private fun SummaryCard(
     }
 }
 
-//Weekly progress
 @Composable
 private fun WeeklyGoalCard(
     progress: Float,
@@ -215,7 +213,6 @@ private fun WeeklyGoalCard(
     }
 }
 
-//Recent Workouts
 @Composable
 private fun RecentWorkoutsSectionTitle(
     modifier: Modifier = Modifier
@@ -308,5 +305,4 @@ private fun QuickWorkoutButton(
     }
 }
 
-//Helper methods
 private fun formatDuration(minutes: Int): String = "$minutes min"

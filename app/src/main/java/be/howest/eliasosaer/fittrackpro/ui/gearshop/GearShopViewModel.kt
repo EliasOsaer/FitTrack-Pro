@@ -1,4 +1,4 @@
-package be.howest.eliasosaer.fittrackpro.ui.shop
+package be.howest.eliasosaer.fittrackpro.ui.gearshop
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +8,6 @@ import be.howest.eliasosaer.fittrackpro.domain.model.PriceSortOrder
 import be.howest.eliasosaer.fittrackpro.domain.usecase.AddToCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.GetGearItemsUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.ObserveCartUseCase
-import be.howest.eliasosaer.fittrackpro.ui.gearshop.GearShopUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

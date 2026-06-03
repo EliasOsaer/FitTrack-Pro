@@ -9,7 +9,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import be.howest.eliasosaer.fittrackpro.MainActivity
 import be.howest.eliasosaer.fittrackpro.R
-import be.howest.eliasosaer.fittrackpro.ui.navigation.Screen
 
 object NotificationHelper {
     fun showOrderDeliveryNotification(
@@ -19,8 +18,6 @@ object NotificationHelper {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel, but only on API 26+ because
-            // the NotificationChannel class is new and not in the support library
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 VERBOSE_NOTIFICATION_CHANNEL_NAME,

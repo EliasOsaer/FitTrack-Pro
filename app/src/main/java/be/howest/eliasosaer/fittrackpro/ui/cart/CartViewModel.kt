@@ -2,8 +2,6 @@ package be.howest.eliasosaer.fittrackpro.ui.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import be.howest.eliasosaer.fittrackpro.domain.model.CartItem
-import be.howest.eliasosaer.fittrackpro.domain.usecase.AddToCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.ClearCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.ObserveCartUseCase
 import be.howest.eliasosaer.fittrackpro.domain.usecase.PlaceOrderUseCase
@@ -21,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val observeCart: ObserveCartUseCase,
-    private val addToCart: AddToCartUseCase,
     private val removeFromCart: RemoveFromCartUseCase,
     private val updateCartQuantity: UpdateCartQuantityUseCase,
     private val placeOrder: PlaceOrderUseCase,
@@ -43,12 +40,6 @@ class CartViewModel @Inject constructor(
                     )
                 }
             }
-        }
-    }
-
-    fun onAddToCart(item: CartItem) {
-        viewModelScope.launch {
-            addToCart(item)
         }
     }
 

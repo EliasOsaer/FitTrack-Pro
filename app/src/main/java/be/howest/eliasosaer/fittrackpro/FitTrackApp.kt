@@ -65,7 +65,7 @@ fun FitTrackApp() {
                     icon = Icons.Filled.Notifications,
                     contentDescriptionResId = R.string.notifications_label,
                     onClick = {
-                        //notifications later
+                        //TODO add notifications later
                     }
                 )
             )

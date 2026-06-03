@@ -6,7 +6,6 @@ import be.howest.eliasosaer.fittrackpro.domain.model.Workout
 import be.howest.eliasosaer.fittrackpro.domain.model.WorkoutDialog
 import be.howest.eliasosaer.fittrackpro.domain.model.WorkoutFilter
 import be.howest.eliasosaer.fittrackpro.domain.usecase.GetWorkoutsUseCase
-import be.howest.eliasosaer.fittrackpro.ui.home.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

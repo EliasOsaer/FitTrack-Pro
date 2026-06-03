@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.DirectionsRun
+import androidx.compose.material.icons.automirrored.outlined.DirectionsRun
 import androidx.compose.material.icons.outlined.FitnessCenter
 import androidx.compose.material.icons.outlined.LocalFireDepartment
 import androidx.compose.material.icons.outlined.Schedule
@@ -93,7 +93,7 @@ private fun WorkoutDetailCard(
                     WorkoutType.CARDIO -> {
                         val details = workout.details as CardioDetails
                         DetailMetric(
-                            icon = { Icon(Icons.Outlined.DirectionsRun, contentDescription = null) },
+                            icon = { Icon(Icons.AutoMirrored.Outlined.DirectionsRun, contentDescription = null) },
                             value = "${details.distanceKm ?: 0.0} km"
                         )
                     }

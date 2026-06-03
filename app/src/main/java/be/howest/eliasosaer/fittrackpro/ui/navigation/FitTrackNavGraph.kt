@@ -15,7 +15,7 @@ import androidx.navigation.navArgument
 import be.howest.eliasosaer.fittrackpro.ui.editworkout.EditWorkoutScreen
 import be.howest.eliasosaer.fittrackpro.ui.editworkout.EditWorkoutViewModel
 import be.howest.eliasosaer.fittrackpro.ui.gearshop.GearShopScreen
-import be.howest.eliasosaer.fittrackpro.ui.shop.GearShopViewModel
+import be.howest.eliasosaer.fittrackpro.ui.gearshop.GearShopViewModel
 import be.howest.eliasosaer.fittrackpro.ui.cart.CartScreen
 import be.howest.eliasosaer.fittrackpro.ui.cart.CartViewModel
 import be.howest.eliasosaer.fittrackpro.ui.home.HomeScreen
@@ -86,10 +86,10 @@ fun FitTrackNavGraph(
             HomeScreen(
                 uiState = homeUiState,
                 onNotificationsClick = {
-                    // navController.navigate(Screen.Notifications.route)
+                    //TODO link notifications screen navController.navigate(Screen.Notifications.route)
                 },
                 onWeeklyGoalClick = {
-                    // navController.navigate(Screen.GoalSettings.route)
+                    //TODO link weekly goal screen navController.navigate(Screen.GoalSettings.route)
                 },
                 onRecentWorkoutClick = { workout ->
                     navController.navigate("workout/${workout.id}")
@@ -273,7 +273,7 @@ fun FitTrackNavGraph(
                 uiState = mapUiState,
                 onRequestLocationPermissionResult = { granted ->
                     if (!granted) {
-                        // optional: show snackbar later
+                        // TODO add permission manager support
                     }
                 },
                 onMapReady = { mapView ->

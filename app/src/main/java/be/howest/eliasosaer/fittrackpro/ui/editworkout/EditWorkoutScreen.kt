@@ -12,7 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.DirectionsRun
+import androidx.compose.material.icons.automirrored.outlined.DirectionsRun
 import androidx.compose.material.icons.outlined.FitnessCenter
 import androidx.compose.material.icons.outlined.LocalFireDepartment
 import androidx.compose.material.icons.outlined.Schedule
@@ -93,7 +93,7 @@ fun EditWorkoutScreen(
                                 value = uiState.distanceKm,
                                 onValueChange = onDistanceChange,
                                 isError = uiState.distanceError,
-                                icon = { Icon(Icons.Outlined.DirectionsRun, contentDescription = null) },
+                                icon = { Icon(Icons.AutoMirrored.Outlined.DirectionsRun, contentDescription = null) },
                                 modifier = Modifier.weight(1f)
                             )
                         }
