@@ -7,6 +7,7 @@ import be.howest.eliasosaer.fittrackpro.data.repository.LightSensorRepositoryImp
 import be.howest.eliasosaer.fittrackpro.data.repository.LocationRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.MovementSensorRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.OrderRepositoryImpl
+import be.howest.eliasosaer.fittrackpro.data.repository.WeeklyGoalRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.domain.repository.GearRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.WorkoutRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.CartRepository
@@ -14,6 +15,7 @@ import be.howest.eliasosaer.fittrackpro.domain.repository.LightSensorRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.LocationRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.MovementSensorRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.OrderRepository
+import be.howest.eliasosaer.fittrackpro.domain.repository.WeeklyGoalRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -57,4 +59,9 @@ abstract class RepositoryModule {
     abstract fun bindMovementSensorRepository(
         impl: MovementSensorRepositoryImpl
     ): MovementSensorRepository
+
+    @Binds
+    abstract fun bindWeeklyGoalRepository(
+        impl: WeeklyGoalRepositoryImpl
+    ): WeeklyGoalRepository
 }

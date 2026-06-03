@@ -1,9 +1,8 @@
-package be.howest.eliasosaer.fittrackpro.ui.notifications
+package be.howest.eliasosaer.fittrackpro.ui.notification
 
 import androidx.lifecycle.ViewModel
 import be.howest.eliasosaer.fittrackpro.domain.model.AppNotification
 import be.howest.eliasosaer.fittrackpro.domain.model.NotificationType
-import be.howest.eliasosaer.fittrackpro.ui.notification.NotificationsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

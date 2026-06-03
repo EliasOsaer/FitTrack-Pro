@@ -34,6 +34,7 @@ sealed class Screen(
     data object SharePurchase : Screen("share_purchase", R.string.share_purchase_label, Icons.Filled.Share)
     data object ThankYou : Screen("thank_you", R.string.thank_you_label, Icons.Filled.Handshake)
     data object Notification : Screen("notification", R.string.notifications_label, Icons.Filled.Mail)
+    data object WeeklyProgress : Screen("Progress", R.string.progress_label, Icons.Filled.Mail)
 }
 
 val bottomBarScreens = listOf(

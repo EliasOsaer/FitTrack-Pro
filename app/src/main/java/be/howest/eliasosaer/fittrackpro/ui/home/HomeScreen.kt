@@ -44,7 +44,6 @@ import be.howest.eliasosaer.fittrackpro.domain.model.Workout
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
-    onNotificationsClick: () -> Unit,
     onWeeklyGoalClick: () -> Unit,
     onRecentWorkoutClick: (Workout) -> Unit,
     onQuickWorkoutClick: () -> Unit,

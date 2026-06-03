@@ -7,6 +7,7 @@
     <string name="schedule_workout">Schedule Workout</string>
     <string name="workout_detail">Workout Detail</string>
     <string name="notifications_label">Notifications</string>
+    <string name="progress_label">Weekly Progress</string>
     <string name="workout_add_label">Workout Add</string>
     <string name="share_purchase_label">Share Purchase</string>
     <string name="thank_you_label">Thank You</string>

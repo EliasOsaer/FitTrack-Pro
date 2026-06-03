@@ -33,7 +33,8 @@ fun FitTrackApp() {
             Screen.WorkoutDetailEdit.route,
             Screen.QuickWorkout.route,
             Screen.Cart.route,
-            Screen.Notification.route
+            Screen.Notification.route,
+            Screen.WeeklyProgress.route
         )
 
         val appBarActions = when (currentRoute) {
