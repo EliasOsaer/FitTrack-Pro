@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Handshake
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Sensors
@@ -32,6 +33,7 @@ sealed class Screen(
     data object QuickWorkout : Screen("quick_workout", R.string.workout_add_label, Icons.Filled.FitnessCenter)
     data object SharePurchase : Screen("share_purchase", R.string.share_purchase_label, Icons.Filled.Share)
     data object ThankYou : Screen("thank_you", R.string.thank_you_label, Icons.Filled.Handshake)
+    data object Notification : Screen("notification", R.string.notifications_label, Icons.Filled.Mail)
 }
 
 val bottomBarScreens = listOf(

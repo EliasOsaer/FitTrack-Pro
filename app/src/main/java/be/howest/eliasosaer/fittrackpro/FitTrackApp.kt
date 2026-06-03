@@ -32,7 +32,8 @@ fun FitTrackApp() {
             Screen.WorkoutDetail.route,
             Screen.WorkoutDetailEdit.route,
             Screen.QuickWorkout.route,
-            Screen.Cart.route
+            Screen.Cart.route,
+            Screen.Notification.route
         )
 
         val appBarActions = when (currentRoute) {
@@ -65,7 +66,7 @@ fun FitTrackApp() {
                     icon = Icons.Filled.Notifications,
                     contentDescriptionResId = R.string.notifications_label,
                     onClick = {
-                        //TODO add notifications later
+                        navController.navigate(Screen.Notification.route)
                     }
                 )
             )
