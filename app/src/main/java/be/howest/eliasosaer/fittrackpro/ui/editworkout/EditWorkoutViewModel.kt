@@ -138,10 +138,6 @@ class EditWorkoutViewModel @Inject constructor(
         }
     }
 
-    fun onSavedHandled() {
-        _uiState.update { it.copy(saved = false) }
-    }
-
     private fun validate(state: EditWorkoutUiState): Boolean {
         val titleError = state.title.isBlank()
         val distanceError = state.workoutType == WorkoutType.CARDIO &&

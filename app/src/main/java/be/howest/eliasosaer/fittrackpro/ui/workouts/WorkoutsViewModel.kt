@@ -49,10 +49,6 @@ class WorkoutsViewModel @Inject constructor(
         }
     }
 
-    fun onWorkoutClick(workout: Workout) {
-        //navigation hook later
-    }
-
     fun onReminderClick(workout: Workout) {
         _uiState.update {
             it.copy(dialog = WorkoutDialog.Reminder(workout.id))
