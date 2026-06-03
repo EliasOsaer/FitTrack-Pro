@@ -35,6 +35,12 @@ class QuickWorkoutViewModel @Inject constructor(
         _uiState.update { it.copy(selectedWorkoutType = type) }
     }
 
+    fun onWorkoutStarted() {
+        _uiState.update {
+            it.copy(startTimeMillis = System.currentTimeMillis())
+        }
+    }
+
     fun onEndWorkoutClick(
         elapsedSeconds: Long,
         navigateBack: () -> Unit
@@ -61,6 +67,13 @@ class QuickWorkoutViewModel @Inject constructor(
                 time = timeFormatter.format(startDate),
                 durationMinutes = durationMinutes
             )
+
+            _uiState.update {
+                it.copy(
+                    title = "",
+                    startTimeMillis = System.currentTimeMillis()
+                )
+            }
 
             navigateBack()
         }

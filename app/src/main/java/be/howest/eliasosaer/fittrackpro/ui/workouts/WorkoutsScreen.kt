@@ -220,28 +220,36 @@ private fun WorkoutCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                IconButton(
-                    onClick = onReminderClick,
-                    modifier = Modifier.testTag("reminder_button_${workout.id}")
+            if (workout.isUpcoming) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.Notifications,
-                        contentDescription = "Reminder"
-                    )
-                }
+                    IconButton(
+                        onClick = onReminderClick,
+                        modifier = Modifier.testTag("reminder_button_${workout.id}")
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Notifications,
+                            contentDescription = "Reminder"
+                        )
+                    }
 
-                IconButton(
-                    onClick = onQrClick,
-                    modifier = Modifier.testTag("qr_button_${workout.id}")
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.QrCode2,
-                        contentDescription = "QR code"
-                    )
+                    IconButton(
+                        onClick = onQrClick,
+                        modifier = Modifier.testTag("qr_button_${workout.id}")
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.QrCode2,
+                            contentDescription = "QR code"
+                        )
+                    }
                 }
+            } else {
+                Text(
+                    text = "Rating: ${buildRatingStars(workout.rating ?: 0)}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium
+                )
             }
         }
     }
@@ -322,6 +330,14 @@ private fun QrOverlayDialog(
 }
 
 private fun formatDuration(minutes: Int): String = "$minutes min"
+
+private fun buildRatingStars(rating: Int): String {
+    val safeRating = rating.coerceIn(0, 5)
+    return buildString {
+        repeat(safeRating) { append("★") }
+        repeat(5 - safeRating) { append("☆") }
+    }
+}
 
 private val FILTER_OPTIONS = listOf(
     WorkoutFilter.UPCOMING to "Upcoming",

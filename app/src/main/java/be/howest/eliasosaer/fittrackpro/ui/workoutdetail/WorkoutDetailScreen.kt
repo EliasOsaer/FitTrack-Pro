@@ -132,7 +132,7 @@ private fun WorkoutDetailCard(
             when (workout.type) {
                 WorkoutType.CARDIO -> {
                     Text(
-                        text = "Pace: 6:15/km",
+                        text = "Pace: ${formatPace(workout.durationMinutes, (workout.details as CardioDetails).distanceKm)}",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -193,6 +193,17 @@ private fun MetricDivider() {
             modifier = Modifier.fillMaxSize()
         )
     }
+}
+
+private fun formatPace(durationMinutes: Int, distanceKm: Double?): String {
+    val distance = distanceKm ?: return "-"
+    if (distance <= 0.0) return "-"
+
+    val secondsPerKm = (durationMinutes * 60.0) / distance
+    val minutesPart = (secondsPerKm / 60).toInt()
+    val secondsPart = (secondsPerKm % 60).toInt()
+
+    return String.format("%d:%02d/km", minutesPart, secondsPart)
 }
 
 private fun buildRatingStars(rating: Int): String {

@@ -209,6 +209,9 @@ fun FitTrackNavGraph(
         composable(Screen.QuickWorkout.route) {
             QuickWorkoutScreen(
                 uiState = quickWorkoutUiState,
+                onWorkoutStarted = {
+                    quickWorkoutViewModel.onWorkoutStarted()
+                },
                 onTitleChange = { quickWorkoutViewModel.onTitleChange(it) },
                 onWorkoutTypeSelected = { quickWorkoutViewModel.onWorkoutTypeSelected(it) },
                 onEndWorkoutClick = { elapsedSeconds ->

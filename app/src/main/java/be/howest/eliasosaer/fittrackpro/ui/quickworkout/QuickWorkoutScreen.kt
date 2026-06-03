@@ -33,6 +33,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun QuickWorkoutScreen(
     uiState: QuickWorkoutUiState,
+    onWorkoutStarted: () -> Unit,
     onTitleChange: (String) -> Unit,
     onWorkoutTypeSelected: (WorkoutType) -> Unit,
     onEndWorkoutClick: (Long) -> Unit,
@@ -40,6 +41,10 @@ fun QuickWorkoutScreen(
 ) {
     var expanded by remember { mutableStateOf(false) }
     var elapsedSeconds by remember(uiState.startTimeMillis) { mutableLongStateOf(0L) }
+
+    LaunchedEffect(Unit) {
+        onWorkoutStarted()
+    }
 
     LaunchedEffect(uiState.startTimeMillis) {
         while (true) {
