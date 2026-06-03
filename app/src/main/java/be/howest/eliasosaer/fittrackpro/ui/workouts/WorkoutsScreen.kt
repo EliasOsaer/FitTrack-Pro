@@ -44,6 +44,9 @@ import androidx.compose.ui.unit.dp
 import be.howest.eliasosaer.fittrackpro.domain.model.Workout
 import be.howest.eliasosaer.fittrackpro.domain.model.WorkoutDialog
 import be.howest.eliasosaer.fittrackpro.domain.model.WorkoutFilter
+import be.howest.eliasosaer.fittrackpro.R
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 
 @Composable
 fun WorkoutsScreen(
@@ -316,10 +319,21 @@ private fun QrOverlayDialog(
             Text("Workout QR")
         },
         text = {
-            Text(
-                text = workout?.let { "Temporary QR placeholder for ${it.title}." }
-                    ?: "Temporary QR placeholder."
-            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.workout_qr),
+                    contentDescription = "Workout QR code",
+                    modifier = Modifier.size(240.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    workout?.title ?: "Workout"
+                )
+            }
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {

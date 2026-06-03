@@ -4,12 +4,14 @@ import android.Manifest
 
 enum class AppPermission {
     NOTIFICATIONS,
-    LOCATION
+    LOCATION,
+    CAMERA
 }
 
 fun AppPermission.toAndroidPermission(): String {
     return when (this) {
         AppPermission.NOTIFICATIONS -> Manifest.permission.POST_NOTIFICATIONS
         AppPermission.LOCATION -> Manifest.permission.ACCESS_FINE_LOCATION
+        AppPermission.CAMERA -> Manifest.permission.CAMERA
     }
 }

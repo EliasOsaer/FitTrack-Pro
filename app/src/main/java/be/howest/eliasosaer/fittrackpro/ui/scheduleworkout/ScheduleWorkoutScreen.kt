@@ -1,5 +1,9 @@
 package be.howest.eliasosaer.fittrackpro.ui.scheduleworkout
 
+import android.content.Intent
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +39,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import be.howest.eliasosaer.fittrackpro.domain.model.WorkoutType
+import kotlinx.coroutines.flow.Flow
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -44,6 +50,8 @@ import java.util.Locale
 @Composable
 fun ScheduleWorkoutScreen(
     uiState: ScheduleWorkoutUiState,
+    events: Flow<ScheduleWorkoutEvent>,
+    onRequestCameraPermission: () -> Unit,
     onTitleChange: (String) -> Unit,
     onWorkoutTypeMenuExpandedChange: (Boolean) -> Unit,
     onWorkoutTypeSelected: (WorkoutType) -> Unit,
@@ -62,6 +70,22 @@ fun ScheduleWorkoutScreen(
         if (uiState.saved) {
             onSavedHandled()
             navigateBack()
+        }
+    }
+
+    val cameraLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { }
+
+    LaunchedEffect(Unit) {
+        onRequestCameraPermission()
+        events.collect { event ->
+            when (event) {
+                ScheduleWorkoutEvent.OpenCamera -> {
+                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    cameraLauncher.launch(intent)
+                }
+            }
         }
     }
 
@@ -243,7 +267,9 @@ private fun ImportQrSection(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
         ) {
             Column(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {

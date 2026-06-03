@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import be.howest.eliasosaer.fittrackpro.domain.model.WorkoutType
 import be.howest.eliasosaer.fittrackpro.domain.usecase.SaveWorkoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,6 +20,9 @@ class ScheduleWorkoutViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(ScheduleWorkoutUiState())
     val uiState: StateFlow<ScheduleWorkoutUiState> = _uiState
+
+    private val _events = MutableSharedFlow<ScheduleWorkoutEvent>()
+    val events = _events.asSharedFlow()
 
     fun onTitleChange(value: String) {
         _uiState.update {
@@ -109,6 +114,12 @@ class ScheduleWorkoutViewModel @Inject constructor(
     fun onSavedHandled() {
         _uiState.update {
             it.copy(saved = false)
+        }
+    }
+
+    fun onImportQrClick() {
+        viewModelScope.launch {
+            _events.emit(ScheduleWorkoutEvent.OpenCamera)
         }
     }
 
