@@ -2,6 +2,7 @@ package be.howest.eliasosaer.fittrackpro.ui.scheduleworkout
 
 import android.content.Intent
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -79,8 +80,12 @@ fun ScheduleWorkoutScreen(
         events.collect { event ->
             when (event) {
                 ScheduleWorkoutEvent.OpenCamera -> {
-                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    cameraLauncher.launch(intent)
+                    try {
+                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        cameraLauncher.launch(intent)
+                    } catch (e: SecurityException) {
+                        Log.d("Camera", "Permission denied", e)
+                    }
                 }
             }
         }

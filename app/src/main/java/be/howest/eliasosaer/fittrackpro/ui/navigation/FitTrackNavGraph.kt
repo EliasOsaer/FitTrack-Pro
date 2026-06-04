@@ -276,10 +276,8 @@ fun FitTrackNavGraph(
         composable(Screen.Map.route) {
             MapScreen(
                 uiState = mapUiState,
-                onRequestLocationPermissionResult = { granted ->
-                    if (!granted) {
-                        // TODO add permission manager support
-                    }
+                onRequestLocationPermission = {
+                    mainViewModel.requestPermission(AppPermission.LOCATION)
                 },
                 onMapReady = { mapView ->
                     mapViewModel.attachMapView(mapView)

@@ -1,15 +1,11 @@
 package be.howest.eliasosaer.fittrackpro.ui.map
 
-import android.Manifest
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.compose.MapEffect
@@ -19,26 +15,13 @@ import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportS
 @Composable
 fun MapScreen(
     uiState: MapUiState,
-    onRequestLocationPermissionResult: (Boolean) -> Unit,
+    onRequestLocationPermission: () -> Unit,
     onMapReady: (com.mapbox.maps.MapView) -> Unit,
     onMapDisposed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val granted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-        onRequestLocationPermissionResult(granted)
-    }
-
     LaunchedEffect(Unit) {
-        permissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
+        onRequestLocationPermission()
     }
 
     DisposableEffect(Unit) {
