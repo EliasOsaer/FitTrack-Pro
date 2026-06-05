@@ -46,6 +46,9 @@ kotlinxCoroutines = "1.7.3"
 workTesting = "2.10.0"
 playServicesLocation = "21.3.0"
 
+#Camera
+cameraX = "1.5.1"
+
 [libraries]
 # Core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -115,6 +118,12 @@ androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = "kotlinxCoroutines"}
 androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "workTesting" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+
+#Camera
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "cameraX" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "cameraX" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraX" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

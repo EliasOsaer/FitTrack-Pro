@@ -129,7 +129,6 @@ fun FitTrackNavGraph(
         composable(Screen.ScheduleWorkout.route) {
             ScheduleWorkoutScreen(
                 uiState = scheduleWorkoutUiState,
-                events = scheduleWorkoutViewModel.events,
                 onTitleChange = { value ->
                     scheduleWorkoutViewModel.onTitleChange(value)
                 },
@@ -156,6 +155,9 @@ fun FitTrackNavGraph(
                 },
                 onImportQrClick = {
                     scheduleWorkoutViewModel.onImportQrClick()
+                },
+                onDismissQrScanner = {
+                    scheduleWorkoutViewModel.onDismissQrScanner()
                 },
                 onRequestCameraPermission = {
                     mainViewModel.requestPermission(AppPermission.CAMERA)

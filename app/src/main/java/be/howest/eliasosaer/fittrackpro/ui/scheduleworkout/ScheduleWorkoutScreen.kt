@@ -1,13 +1,13 @@
 package be.howest.eliasosaer.fittrackpro.ui.scheduleworkout
 
-import android.content.Intent
-import android.provider.MediaStore
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.DatePicker
@@ -28,18 +29,23 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import be.howest.eliasosaer.fittrackpro.domain.model.WorkoutType
-import kotlinx.coroutines.flow.Flow
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -48,7 +54,6 @@ import java.util.Locale
 @Composable
 fun ScheduleWorkoutScreen(
     uiState: ScheduleWorkoutUiState,
-    events: Flow<ScheduleWorkoutEvent>,
     onRequestCameraPermission: () -> Unit,
     onTitleChange: (String) -> Unit,
     onWorkoutTypeMenuExpandedChange: (Boolean) -> Unit,
@@ -59,6 +64,7 @@ fun ScheduleWorkoutScreen(
     onTimeChange: (String) -> Unit,
     onDurationChange: (String) -> Unit,
     onImportQrClick: () -> Unit,
+    onDismissQrScanner: () -> Unit,
     onSaveClick: () -> Unit,
     onSavedHandled: () -> Unit,
     navigateBack: () -> Unit,
@@ -68,26 +74,6 @@ fun ScheduleWorkoutScreen(
         if (uiState.saved) {
             onSavedHandled()
             navigateBack()
-        }
-    }
-
-    val cameraLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { }
-
-    LaunchedEffect(Unit) {
-        onRequestCameraPermission()
-        events.collect { event ->
-            when (event) {
-                ScheduleWorkoutEvent.OpenCamera -> {
-                    try {
-                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                        cameraLauncher.launch(intent)
-                    } catch (e: SecurityException) {
-                        Log.d("Camera", "Permission denied", e)
-                    }
-                }
-            }
         }
     }
 
@@ -200,7 +186,12 @@ fun ScheduleWorkoutScreen(
             }
         )
 
-        ImportQrSection(onImportQrClick = onImportQrClick)
+        ImportQrSection(
+            onImportQrClick = {
+                onRequestCameraPermission()
+                onImportQrClick()
+            }
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -245,6 +236,12 @@ fun ScheduleWorkoutScreen(
             DatePicker(state = datePickerState)
         }
     }
+
+    if (uiState.showQrScanner) {
+        QrScannerDialog(
+            onDismiss = onDismissQrScanner
+        )
+    }
 }
 
 @Composable
@@ -283,4 +280,76 @@ private fun ImportQrSection(
             }
         }
     }
+}
+
+@Composable
+private fun QrScannerDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Close")
+            }
+        },
+        text = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(420.dp)
+            ) {
+                CameraPreview(
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+    )
+}
+
+@Composable
+private fun CameraPreview(
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val cameraProviderFuture = remember {
+        ProcessCameraProvider.getInstance(context)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            val cameraProvider = cameraProviderFuture.get()
+            cameraProvider.unbindAll()
+        }
+    }
+
+    AndroidView(
+        modifier = modifier,
+        factory = { ctx ->
+            PreviewView(ctx).apply {
+                implementationMode = PreviewView.ImplementationMode.COMPATIBLE
+                scaleType = PreviewView.ScaleType.FILL_CENTER
+            }
+        },
+        update = { previewView ->
+            cameraProviderFuture.addListener(
+                {
+                    val cameraProvider = cameraProviderFuture.get()
+
+                    val preview = Preview.Builder().build().also {
+                        it.surfaceProvider = previewView.surfaceProvider
+                    }
+
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        CameraSelector.DEFAULT_BACK_CAMERA,
+                        preview
+                    )
+                },
+                ContextCompat.getMainExecutor(context)
+            )
+        }
+    )
 }

@@ -18,6 +18,7 @@ data class ScheduleWorkoutUiState(
     val timeError: Boolean = false,
     val durationError: Boolean = false,
 
+    val showQrScanner: Boolean = false,
     val isSaving: Boolean = false,
     val saved: Boolean = false
 )
