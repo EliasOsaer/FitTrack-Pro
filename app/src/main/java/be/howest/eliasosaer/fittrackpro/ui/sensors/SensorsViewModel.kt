@@ -2,6 +2,7 @@ package be.howest.eliasosaer.fittrackpro.ui.sensors
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import be.howest.eliasosaer.fittrackpro.domain.repository.FlashlightRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.LightSensorRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.MovementSensorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SensorsViewModel @Inject constructor(
     private val lightSensorRepository: LightSensorRepository,
-    private val movementSensorRepository: MovementSensorRepository
+    private val movementSensorRepository: MovementSensorRepository,
+    private val flashlightRepository: FlashlightRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -37,6 +39,7 @@ class SensorsViewModel @Inject constructor(
                 _uiState.update { currentState ->
                     currentState.copy(lightIntensity = intensity)
                 }
+                updateFlashlightState()
             }
         }
     }
@@ -47,6 +50,7 @@ class SensorsViewModel @Inject constructor(
                 _uiState.update { currentState ->
                     currentState.copy(movementLabel = movement)
                 }
+                updateFlashlightState()
             }
         }
     }
@@ -57,7 +61,25 @@ class SensorsViewModel @Inject constructor(
     }
 
     fun onScreenHidden() {
+        flashlightRepository.setFlashlight(false)
         lightSensorRepository.stopListening()
         movementSensorRepository.stopListening()
+
+        _uiState.update {
+            it.copy(isFlashlightOn = false)
+        }
+    }
+
+    private fun updateFlashlightState() {
+        val state = _uiState.value
+
+        val shouldEnable =
+            state.lightIntensity < 50f && state.movementLabel.equals("Running", ignoreCase = true)
+
+        flashlightRepository.setFlashlight(shouldEnable)
+
+        _uiState.update {
+            it.copy(isFlashlightOn = shouldEnable)
+        }
     }
 }

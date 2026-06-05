@@ -128,5 +128,37 @@ fun SensorsScreen(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        Text(
+            text = "Flashlight",
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Status")
+
+                Text(
+                    text = if (uiState.isFlashlightOn)
+                        "Activated"
+                    else
+                        "Disabled",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
     }
 }

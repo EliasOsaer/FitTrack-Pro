@@ -3,6 +3,7 @@ package be.howest.eliasosaer.fittrackpro.di
 import be.howest.eliasosaer.fittrackpro.data.repository.GearRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.WorkoutRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.CartRepositoryImpl
+import be.howest.eliasosaer.fittrackpro.data.repository.FlashlightRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.LightSensorRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.LocationRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.data.repository.MovementSensorRepositoryImpl
@@ -11,6 +12,7 @@ import be.howest.eliasosaer.fittrackpro.data.repository.WeeklyGoalRepositoryImpl
 import be.howest.eliasosaer.fittrackpro.domain.repository.GearRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.WorkoutRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.CartRepository
+import be.howest.eliasosaer.fittrackpro.domain.repository.FlashlightRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.LightSensorRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.LocationRepository
 import be.howest.eliasosaer.fittrackpro.domain.repository.MovementSensorRepository
@@ -64,4 +66,9 @@ abstract class RepositoryModule {
     abstract fun bindWeeklyGoalRepository(
         impl: WeeklyGoalRepositoryImpl
     ): WeeklyGoalRepository
+
+    @Binds
+    abstract fun bindFlashLightRepository(
+        impl: FlashlightRepositoryImpl
+    ): FlashlightRepository
 }
